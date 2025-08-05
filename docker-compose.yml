@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=your-production-secret-key-here
+      - GOOGLE_API_KEY=your-google-api-key-here
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+    volumes:
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
+      - ./db.sqlite3:/app/db.sqlite3
+    restart: unless-stopped
+
+  # Optional: Add a database service for production
+  # db:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_DB: chatbot
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+
+# volumes:
+#   postgres_data:
